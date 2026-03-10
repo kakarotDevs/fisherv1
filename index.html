@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Fisher Electrical, Air and Solar - Professional trade services across Moreton Bay and South East Queensland."
+        />
+        <title>Fisher Electrical|Air|Solar</title>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="preload"
+            href="public/fonts/Inter-Regular.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link
+            rel="preload"
+            href="public/fonts/Inter-Medium.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link
+            rel="preload"
+            href="public/fonts/Inter-SemiBold.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link
+            rel="preload"
+            href="public/fonts/Inter-Light.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link
+            rel="preload"
+            href="public/fonts/A_Space/A-Space Light Demo.otf"
+            as="font"
+            type="font/otf"
+            crossorigin
+        />
+
+        <script src="js/htmx.min.js" defer></script>
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        <span class="logo animate">
+            <img src="public/logos/logo.svg" alt="Fisher" />
+        </span>
+        <a 
+            href="tel:0456676808" 
+            class="header-link animate"
+            hx-get="partials/phone-reveal.html"
+            hx-trigger="mouseenter[window.innerWidth > 768]"
+            hx-target="this"
+            hx-swap="innerHTML"
+            hx-on:mouseleave="if(!this.hasAttribute('data-locked')) this.innerText='Contact Us'"
+            onclick="if(window.innerWidth > 768) { if(this.hasAttribute('data-locked')) return true; this.setAttribute('data-locked', 'true'); return false; }"
+        >Contact Us</a>
+
+        <main>
+            <section class="hero">
+                <h1 class="animate delay-1">
+                    <span>FISHER</span>
+                    <span>ELECTRICAL | AIR | SOLAR</span>
+                </h1>
+                <p class="tagline animate delay-2">
+                    Professional electrical, air conditioning and solar services
+                    for homes and businesses across Moreton Bay and South East
+                    Queensland.
+                </p>
+            </section>
+
+            <!-- HTMX Lazy Loaded Sections -->
+            <div
+                hx-get="partials/services.html"
+                hx-trigger="intersect once"
+                hx-swap="outerHTML"
+                class="htmx-placeholder"
+            ></div>
+
+            <div
+                hx-get="partials/contact.html"
+                hx-trigger="intersect once"
+                hx-swap="outerHTML"
+                class="htmx-placeholder"
+            ></div>
+        </main>
+
+        <footer>
+            <div class="footer-group">
+                <p class="footer-text">
+                    &copy; 2026 Fisher Electrical, Air and Solar
+                </p>
+                <p class="footer-text">ABN 26 374 793 956</p>
+            </div>
+            <a href="https://kakarotdevs.com" class="dev-credit">
+                <img src="public/logos/kakarot.png" alt="kakarotdevs" />
+            </a>
+        </footer>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.style.animationPlayState =
+                                    "running";
+                            }
+                        });
+                    },
+                    { threshold: 0.1 },
+                );
+
+                const observeElements = () => {
+                    document.querySelectorAll(".animate").forEach((el) => {
+                        if (el.style.animationPlayState !== "running") {
+                            el.style.animationPlayState = "paused";
+                            observer.observe(el);
+                        }
+                    });
+                };
+
+                observeElements();
+
+                // Re-observe when htmx adds content
+                document.body.addEventListener("htmx:afterSwap", (evt) => {
+                    observeElements();
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<section id="contact" class="contact animate delay-1">
+    <h2>Get in Touch</h2>
+    <div class="contact-grid">
+        <div class="contact-item">
+            <span class="contact-label">Email</span>
+            <a href="mailto:contact@fishereas.com.au" class="page-link"
+                >contact@fishereas.com.au</a
+            >
+        </div>
+        <div class="contact-item">
+            <span class="contact-label">Phone</span>
+            <a 
+                href="tel:0456676808" 
+                class="page-link"
+                hx-get="partials/phone-reveal.html"
+                hx-trigger="mouseenter[window.innerWidth > 768]"
+                hx-target="this"
+                hx-swap="innerHTML"
+                hx-on:mouseleave="if(!this.hasAttribute('data-locked')) this.innerText='Call Us'"
+                onclick="if(window.innerWidth > 768) { if(this.hasAttribute('data-locked')) return true; this.setAttribute('data-locked', 'true'); return false; }"
+            >Call Us</a>
+        </div>
+        <div class="contact-item">
+            <span class="contact-label">Service Area</span>
+            <span class="page-link" style="cursor: default"
+                >Moreton Bay & Surrounds</span
+            >
+        </div>
+    </div>
+</section>
