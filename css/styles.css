@@ -304,10 +304,6 @@ body::after {
     padding-left: 12px;
 }
 
-.services-item:first-child {
-    border-top: 1px solid var(--offwhite);
-}
-
 .services-name {
     font-size: clamp(1.5rem, 3vw, 2.25rem);
     font-weight: 500;
