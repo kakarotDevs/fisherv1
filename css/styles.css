@@ -417,7 +417,7 @@ body::after {
     scroll-snap-align: center;
     opacity: 0;
     will-change: transform, opacity;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
     outline: none;
     z-index: 1;
@@ -431,6 +431,7 @@ body::after {
 .gallery-image-wrapper:focus {
     transform: scale(1.04);
     z-index: 10;
+    box-shadow: 0 0 0 4px var(--google-blue), 0 12px 30px rgba(66, 133, 244, 0.25);
 }
 
 .gallery-image {
@@ -444,54 +445,7 @@ body::after {
     z-index: 2;
 }
 
-/* Drawing Border Animation */
-.border-anim {
-    position: absolute;
-    inset: -3px;
-    border-radius: 15px;
-    overflow: hidden;
-    z-index: 1;
-    opacity: 0;
-    pointer-events: none;
-}
 
-.border-anim::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 250%;
-    height: 250%;
-    background: conic-gradient(
-        from 0deg, 
-        transparent 60%, 
-        var(--google-blue) 80%, 
-        var(--google-green) 100%
-    );
-    transform: translate(-50%, -50%) rotate(0deg);
-}
-
-.gallery-image-wrapper:hover .border-anim,
-.gallery-image-wrapper:focus .border-anim {
-    animation: drawSweep 1.2s forwards;
-}
-
-.gallery-image-wrapper:hover .border-anim::before,
-.gallery-image-wrapper:focus .border-anim::before {
-    animation: sweepRotate 1.2s linear forwards;
-}
-
-@keyframes drawSweep {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-@keyframes sweepRotate {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
 
 .services-detail {
     font-size: 0.9375rem;
@@ -707,9 +661,6 @@ footer {
         opacity: 1 !important;
         transform: scale(1) !important;
         transition-delay: 0s !important;
-    }
-    .border-anim {
-        display: none !important;
     }
     .gallery-image {
         min-width: unset;
