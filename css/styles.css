@@ -409,27 +409,75 @@ body::after {
     cursor: grabbing;
 }
 
-.gallery-image {
-    height: 90%;
-    min-width: 450px;
-    object-fit: cover;
-    transition: 
-        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.5s ease;
-    border-radius: 12px;
-    opacity: 0;
-    will-change: transform, opacity;
-    scroll-snap-align: center;
-    background: var(--offwhite);
+@property --draw-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
 }
 
-.services-item.active .gallery-image {
+.gallery-image-wrapper {
+    position: relative;
+    height: 90%;
+    min-width: 450px;
+    border-radius: 12px;
+    scroll-snap-align: center;
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    isolation: isolate;
+    cursor: pointer;
+    outline: none;
+}
+
+.services-item.active .gallery-image-wrapper {
     opacity: 1;
 }
 
-.gallery-image:hover {
-    transform: scale(1.05);
+.gallery-image-wrapper:hover,
+.gallery-image-wrapper:focus {
+    transform: scale(1.04);
     z-index: 10;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    background: var(--offwhite);
+    display: block;
+}
+
+.gallery-image-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--google-blue), var(--google-green));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@supports (background: conic-gradient(from 0deg, red, blue)) {
+    .gallery-image-wrapper::after {
+        background: conic-gradient(
+            from 0deg, 
+            var(--google-blue) 0deg, 
+            var(--google-green) var(--draw-angle), 
+            transparent var(--draw-angle)
+        );
+    }
+    .gallery-image-wrapper:hover::after,
+    .gallery-image-wrapper:focus::after {
+        opacity: 1;
+        animation: drawBorder 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+}
+
+@keyframes drawBorder {
+    0% { --draw-angle: 0deg; }
+    100% { --draw-angle: 360deg; }
 }
 
 .services-detail {
@@ -641,11 +689,17 @@ footer {
         height: 350px;
     }
 
-    .gallery-image {
+    .gallery-image-wrapper {
         min-width: 280px;
         opacity: 1 !important;
         transform: scale(1) !important;
         transition-delay: 0s !important;
+    }
+    .gallery-image-wrapper::after {
+        display: none;
+    }
+    .gallery-image {
+        min-width: unset;
     }
     
     .gallery-track {
