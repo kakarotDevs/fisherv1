@@ -432,7 +432,7 @@ footer {
 /* Mobile Optimizations */
 @media (max-width: 768px) {
   main {
-    padding: 100px 0 0; /* Remove side padding from main container */
+    padding: 100px 24px 0; /* Restore side padding for all main content */
   }
   
   .logo {
@@ -449,7 +449,7 @@ footer {
     padding-bottom: 8vh;
     width: 100%;
     max-width: none; /* Ensure it truly breaks out of constraints */
-    padding-left: 0; /* Zero padding for full width impact */
+    padding-left: 0; 
     padding-right: 0;
   }
 
@@ -466,8 +466,7 @@ footer {
   }
 
   .tagline {
-    padding-left: 12px;
-    padding-right: 12px;
+    /* Padding now inherited from .hero container room */
   }
   
   .header-link {
@@ -483,8 +482,6 @@ footer {
   }
   
   .services, .contact {
-    padding-left: 24px; /* Restore comfortable padding for content sections */
-    padding-right: 24px;
     margin-top: 80px;
   }
 
