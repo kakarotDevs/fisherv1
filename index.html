@@ -160,13 +160,7 @@
                         if (!track) return;
 
                         // Improved horizontal wheel scroll (natural vertical)
-                        track.addEventListener('wheel', (e) => {
-                            const isHorizontalIntent = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-                            if (isHorizontalIntent) {
-                                e.preventDefault();
-                                track.scrollLeft += e.deltaX;
-                            }
-                        }, { passive: false });
+                        // Removed wheel listener to allow natural page scroll
 
                         // Drag to scroll
                         let isDown = false;
@@ -231,20 +225,14 @@
                             
                             document.querySelectorAll('.services-item').forEach(el => {
                                 el.classList.remove('active');
-                                el.querySelectorAll('.gallery-image').forEach(img => {
-                                    img.style.transitionDelay = '0s';
-                                });
                             });
                             
                             if (!isActive) {
                                 item.classList.add('active');
-                                track.querySelectorAll('.gallery-image').forEach((img, index) => {
-                                    img.style.transitionDelay = `${0.1 + (index * 0.05)}s`;
-                                });
                                 setTimeout(() => {
                                     track.scrollLeft = 0;
                                     updateFocus();
-                                }, 100);
+                                }, 50);
                             }
                         };
                     });
