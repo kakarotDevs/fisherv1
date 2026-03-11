@@ -105,7 +105,7 @@
         <footer>
             <div class="footer-group">
                 <p class="footer-text">
-                    &copy; 2026 Fisher Electrical, Air and Solar
+                    2025 Fisher Electrical, Air and Solar
                 </p>
                 <p class="footer-text">ABN 26 374 793 956</p>
             </div>
@@ -155,64 +155,73 @@
                         }
                     });
 
-                    document.querySelectorAll('.services-item').forEach(item => {
-                        const track = item.querySelector('.gallery-track');
-                        if (!track) return;
+                    document
+                        .querySelectorAll(".services-item")
+                        .forEach((item) => {
+                            const track = item.querySelector(".gallery-track");
+                            if (!track) return;
 
-                        // Improved horizontal wheel scroll (natural vertical)
-                        // Removed wheel listener to allow natural page scroll
+                            // Improved horizontal wheel scroll (natural vertical)
+                            // Removed wheel listener to allow natural page scroll
 
-                        // Drag to scroll
-                        let isDown = false;
-                        let startX;
-                        let scrollLeft;
-                        let isDragging = false;
+                            // Drag to scroll
+                            let isDown = false;
+                            let startX;
+                            let scrollLeft;
+                            let isDragging = false;
 
-                        track.addEventListener('mousedown', (e) => {
-                            isDown = true;
-                            isDragging = false;
-                            track.classList.add('grabbing');
-                            startX = e.pageX - track.offsetLeft;
-                            scrollLeft = track.scrollLeft;
-                        });
-
-                        const endDrag = () => {
-                            isDown = false;
-                            track.classList.remove('grabbing');
-                        };
-                        track.addEventListener('mouseleave', endDrag);
-                        track.addEventListener('mouseup', endDrag);
-
-                        track.addEventListener('mousemove', (e) => {
-                            if (!isDown) return;
-                            const x = e.pageX - track.offsetLeft;
-                            const walk = (x - startX) * 2;
-                            if (Math.abs(walk) > 5) {
-                                isDragging = true;
-                                e.preventDefault();
-                                track.scrollLeft = scrollLeft - walk;
-                            }
-                        });
-
-                        // Clean accordion toggle
-                        item.onclick = function(e) {
-                            if (isDragging) return;
-                            if (e.target.closest('.gallery-track') && item.classList.contains('active')) return;
-
-                            const isActive = item.classList.contains('active');
-                            
-                            document.querySelectorAll('.services-item').forEach(el => {
-                                el.classList.remove('active');
+                            track.addEventListener("mousedown", (e) => {
+                                isDown = true;
+                                isDragging = false;
+                                track.classList.add("grabbing");
+                                startX = e.pageX - track.offsetLeft;
+                                scrollLeft = track.scrollLeft;
                             });
-                            
-                            if (!isActive) {
-                                item.classList.add('active');
-                                setTimeout(() => {
-                                    track.scrollLeft = 0;
-                                }, 50);
-                            }
-                        };
-                    });
+
+                            const endDrag = () => {
+                                isDown = false;
+                                track.classList.remove("grabbing");
+                            };
+                            track.addEventListener("mouseleave", endDrag);
+                            track.addEventListener("mouseup", endDrag);
+
+                            track.addEventListener("mousemove", (e) => {
+                                if (!isDown) return;
+                                const x = e.pageX - track.offsetLeft;
+                                const walk = (x - startX) * 2;
+                                if (Math.abs(walk) > 5) {
+                                    isDragging = true;
+                                    e.preventDefault();
+                                    track.scrollLeft = scrollLeft - walk;
+                                }
+                            });
+
+                            // Clean accordion toggle
+                            item.onclick = function (e) {
+                                if (isDragging) return;
+                                if (
+                                    e.target.closest(".gallery-track") &&
+                                    item.classList.contains("active")
+                                )
+                                    return;
+
+                                const isActive =
+                                    item.classList.contains("active");
+
+                                document
+                                    .querySelectorAll(".services-item")
+                                    .forEach((el) => {
+                                        el.classList.remove("active");
+                                    });
+
+                                if (!isActive) {
+                                    item.classList.add("active");
+                                    setTimeout(() => {
+                                        track.scrollLeft = 0;
+                                    }, 50);
+                                }
+                            };
+                        });
                 }
 
                 shuffleGalleries();
