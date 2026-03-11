@@ -157,6 +157,45 @@
 
                     // Add click listeners for accordion exclusivity
                     document.querySelectorAll('.services-item').forEach(item => {
+                        const track = item.querySelector('.gallery-track');
+                        
+                        // Handle mouse wheel horizontal scroll
+                        if (track) {
+                            track.addEventListener('wheel', (e) => {
+                                if (e.deltaY !== 0) {
+                                    e.preventDefault();
+                                    track.scrollLeft += e.deltaY;
+                                }
+                            }, { passive: false });
+
+                            // Drag to scroll
+                            let isDown = false;
+                            let startX;
+                            let scrollLeft;
+
+                            track.addEventListener('mousedown', (e) => {
+                                isDown = true;
+                                track.classList.add('grabbing');
+                                startX = e.pageX - track.offsetLeft;
+                                scrollLeft = track.scrollLeft;
+                            });
+                            track.addEventListener('mouseleave', () => {
+                                isDown = false;
+                                track.classList.remove('grabbing');
+                            });
+                            track.addEventListener('mouseup', () => {
+                                isDown = false;
+                                track.classList.remove('grabbing');
+                            });
+                            track.addEventListener('mousemove', (e) => {
+                                if (!isDown) return;
+                                e.preventDefault();
+                                const x = e.pageX - track.offsetLeft;
+                                const walk = (x - startX) * 2;
+                                track.scrollLeft = scrollLeft - walk;
+                            });
+                        }
+
                         item.onclick = function() {
                             const isActive = this.classList.contains('active');
                             document.querySelectorAll('.services-item').forEach(el => {

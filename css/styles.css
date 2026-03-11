@@ -350,20 +350,28 @@ body::after {
     padding-bottom: 40px;
 }
 
-.gallery-track {
-    display: flex;
-    gap: 12px;
-    height: 100%;
-    width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: 0 4px;
-    perspective: 1000px;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-}
+    .gallery-track {
+        display: flex;
+        gap: 30px;
+        height: 100%;
+        width: 100%;
+        padding: 0 5vw;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+        cursor: grab;
+    }
+
+    .gallery-track::-webkit-scrollbar {
+        display: none;
+    }
+
+    .gallery-track:active, .gallery-track.grabbing {
+        cursor: grabbing;
+    }
+
 
 .gallery-image {
     height: 100%;
