@@ -159,20 +159,16 @@
                         const track = item.querySelector('.gallery-track');
                         if (!track) return;
 
-                        // 1. IMPROVED SCROLL LOGIC (Natural vertical, smooth horizontal)
+                        // Improved horizontal wheel scroll (natural vertical)
                         track.addEventListener('wheel', (e) => {
-                            // Only intercept if the user is scrolling significantly horizontally
-                            // OR if they are using a trackpad sideways swipe (deltaX)
                             const isHorizontalIntent = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-                            
                             if (isHorizontalIntent) {
                                 e.preventDefault();
                                 track.scrollLeft += e.deltaX;
                             }
-                            // Otherwise, let the vertical scroll bubble up to the body
                         }, { passive: false });
 
-                        // 2. DRAG TO SCROLL WITH MOMENTUM
+                        // Drag to scroll
                         let isDown = false;
                         let startX;
                         let scrollLeft;
@@ -204,7 +200,7 @@
                             }
                         });
 
-                        // 3. MAGNIFICATION / FOCUS EFFECT
+                        // Focus effect on scroll
                         const updateFocus = () => {
                             const trackRect = track.getBoundingClientRect();
                             const trackCenter = trackRect.left + trackRect.width / 2;
@@ -215,7 +211,6 @@
                                 const distance = Math.abs(trackCenter - imgCenter);
                                 const proximity = 1 - Math.min(1, distance / (trackRect.width / 1.5));
                                 
-                                // Apply focus class based on proximity for styling
                                 if (proximity > 0.8) {
                                     img.classList.add('is-focused');
                                 } else {
@@ -227,15 +222,13 @@
                         track.addEventListener('scroll', updateFocus);
                         window.addEventListener('resize', updateFocus);
                         
-                        // 4. CLEANER ACCORDION LOGIC
-                        item.addEventListener('click', (e) => {
-                            // Don't toggle if we were dragging or if clicking inside a revealed track
+                        // Clean accordion toggle
+                        item.onclick = function(e) {
                             if (isDragging) return;
                             if (e.target.closest('.gallery-track') && item.classList.contains('active')) return;
 
                             const isActive = item.classList.contains('active');
                             
-                            // Close all
                             document.querySelectorAll('.services-item').forEach(el => {
                                 el.classList.remove('active');
                                 el.querySelectorAll('.gallery-image').forEach(img => {
@@ -245,111 +238,18 @@
                             
                             if (!isActive) {
                                 item.classList.add('active');
-                                // Stagger entrance
                                 track.querySelectorAll('.gallery-image').forEach((img, index) => {
                                     img.style.transitionDelay = `${0.1 + (index * 0.05)}s`;
                                 });
-                                // Reset position
                                 setTimeout(() => {
                                     track.scrollLeft = 0;
                                     updateFocus();
                                 }, 100);
                             }
-                        });
-                    });
-                }
-
-                    });
-
-                    // Add click listeners for accordion exclusivity
-                    document.querySelectorAll('.services-item').forEach(item => {
-                        const track = item.querySelector('.gallery-track');
-                        
-                        // Handle mouse wheel horizontal scroll
-                        if (track) {
-                            track.addEventListener('wheel', (e) => {
-                                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-                                    e.preventDefault();
-                                    track.scrollLeft += e.deltaX;
-                                }
-                                // If vertical scroll (deltaY), we do NOT preventDefault
-                                // so the page can scroll naturally.
-                            }, { passive: false });
-
-                            // Drag to scroll
-                            let isDown = false;
-                            let startX;
-                            let scrollLeft;
-                            let isDragging = false;
-
-                            track.addEventListener('mousedown', (e) => {
-                                isDown = true;
-                                isDragging = false;
-                                track.classList.add('grabbing');
-                                startX = e.pageX - track.offsetLeft;
-                                scrollLeft = track.scrollLeft;
-                            });
-                            track.addEventListener('mouseleave', () => {
-                                isDown = false;
-                                track.classList.remove('grabbing');
-                            });
-                            track.addEventListener('mouseup', (e) => {
-                                isDown = false;
-                                track.classList.remove('grabbing');
-                            });
-                            track.addEventListener('mousemove', (e) => {
-                                if (!isDown) return;
-                                
-                                const x = e.pageX - track.offsetLeft;
-                                const walk = (x - startX) * 2;
-                                if (Math.abs(walk) > 5) {
-                                    isDragging = true;
-                                    e.preventDefault();
-                                    track.scrollLeft = scrollLeft - walk;
-                                }
-                            });
-                            
-                            // Block accordion toggle if dragging occurred
-                            item.addEventListener('click', (e) => {
-                                if (isDragging) {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                }
-                            }, true);
-                        }
-
-                        item.onclick = function() {
-                            const isActive = this.classList.contains('active');
-                            document.querySelectorAll('.services-item').forEach(el => {
-                                el.classList.remove('active');
-                                // Reset image styles when closing
-                                el.querySelectorAll('.gallery-image').forEach(img => {
-                                    img.style.transitionDelay = '0s';
-                                });
-                            });
-                            
-                            if (!isActive) {
-                                this.classList.add('active');
-                                const track = this.querySelector('.gallery-track');
-                                if (track) {
-                                    const images = Array.from(track.children);
-                                    // Shuffle
-                                    for (let i = images.length - 1; i > 0; i--) {
-                                        const j = Math.floor(Math.random() * (i + 1));
-                                        track.appendChild(images[j]);
-                                    }
-                                    // Staggered reveal delay
-                                    track.querySelectorAll('.gallery-image').forEach((img, index) => {
-                                        img.style.transitionDelay = `${0.1 + (index * 0.05)}s`;
-                                    });
-                                    track.scrollLeft = 0;
-                                }
-                            }
                         };
                     });
                 }
 
-                // Initial shuffle
                 shuffleGalleries();
             });
         </script>

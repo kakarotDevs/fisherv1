@@ -410,24 +410,9 @@ body::after {
 .gallery-image:hover, .gallery-image.is-focused {
     filter: grayscale(0) brightness(1);
     opacity: 1 !important;
-    transform: scale(1.08) translateY(-15px) !important; /* Significant magnification */
+    transform: scale(1.08) translateY(-15px) !important;
     z-index: 10;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.25); /* Stronger shadow */
-}
-
-
-.gallery-image:hover {
-    filter: grayscale(0) brightness(1);
-    opacity: 1 !important;
-    transform: scale(1.02) translateZ(0);
-    z-index: 2;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-
-
-.services-item.active .gallery-image {
-    opacity: 1;
-    transform: translateX(0) scale(1);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.25);
 }
 
 .services-item.active .services-header {
