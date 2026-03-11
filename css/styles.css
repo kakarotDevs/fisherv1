@@ -759,7 +759,8 @@ footer {
 .gallery-nav {
     position: absolute;
     bottom: 20px;
-    right: 15vw; /* Align to the right side where track padding ends */
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: 24px;
     z-index: 20;
