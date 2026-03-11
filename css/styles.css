@@ -483,13 +483,13 @@ footer {
     }
 
     .hero h1 span:nth-child(2) {
-        font-size: 0.13em; /* Slightly larger for clarity */
-        letter-spacing: normal;
+        font-size: 0.22em; /* Significantly larger to reduce awkward whitespace */
+        letter-spacing: -0.02em; /* Tighter letter spacing for larger text */
         padding-left: 0;
         text-align: justify;
         text-align-last: justify;
         opacity: 0.8;
-        margin-top: 4px;
+        margin-top: 2px;
     }
 
     .tagline {
