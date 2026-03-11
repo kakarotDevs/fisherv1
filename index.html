@@ -7,8 +7,12 @@
             name="description"
             content="Fisher Electrical, Air and Solar - Professional trade services across Moreton Bay and South East Queensland."
         />
-        <title>Fisher Electrical|Air|Solar</title>
-        <link rel="icon" type="image/svg+xml" href="public/logos/iconlogo.svg" />
+        <title>Fishereas</title>
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="public/logos/iconlogo.svg"
+        />
 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -54,16 +58,23 @@
         <span class="logo animate">
             <img src="public/logos/logo.svg" alt="Fisher" />
         </span>
-        <a 
-            href="tel:0456676808" 
+        <a
+            href="tel:0456676808"
             class="header-link animate"
             hx-get="partials/phone-reveal.html"
             hx-trigger="mouseenter[window.innerWidth > 768]"
             hx-target="this"
             hx-swap="innerHTML"
             hx-on:mouseleave="if(!this.hasAttribute('data-locked')) this.innerText='Contact Us'"
-            onclick="if(window.innerWidth > 768) { if(this.hasAttribute('data-locked')) return true; this.setAttribute('data-locked', 'true'); return false; }"
-        >Contact Us</a>
+            onclick="
+                if (window.innerWidth > 768) {
+                    if (this.hasAttribute('data-locked')) return true;
+                    this.setAttribute('data-locked', 'true');
+                    return false;
+                }
+            "
+            >Contact Us</a
+        >
 
         <main>
             <section class="hero">
