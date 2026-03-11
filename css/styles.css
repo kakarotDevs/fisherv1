@@ -454,12 +454,20 @@ footer {
     padding-bottom: 8vh;
     width: 100%;
     max-width: none; /* Ensure it truly breaks out of constraints */
-    padding-left: 12px; /* Very minimal side padding for hero */
-    padding-right: 12px;
+    padding-left: 0; /* Zero padding for full width impact */
+    padding-right: 0;
   }
 
   .hero h1 {
-    font-size: clamp(3.5rem, 15vw, 8.5rem); /* Larger typography for mobile impact */
+    font-size: clamp(3.5rem, 20vw, 12rem); /* Even larger for mobile */
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero h1 span:nth-child(2) {
+    font-size: 0.12em; /* Shrink the sub-line slightly to ensure it fits the wider FISHER */
+    letter-spacing: 0.6em; /* Increase tracking to match the now wider title */
+    padding-left: 0.6em;
   }
 
   .tagline {
