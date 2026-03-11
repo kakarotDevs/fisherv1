@@ -683,3 +683,56 @@ footer {
         order: 1;
     }
 }
+
+
+/* Gallery Navigation */
+.gallery-nav {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.services-item.active .gallery-nav {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--black);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.nav-btn:hover {
+    background: var(--white);
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+/* Hide on Mobile */
+@media (max-width: 768px) {
+    .gallery-nav {
+        display: none !important;
+    }
+}
