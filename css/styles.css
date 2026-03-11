@@ -373,15 +373,27 @@ body::after {
     transition: 
         filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
         transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.4s ease;
     border-radius: 4px;
     opacity: 0;
-    transform: translateX(30px) scale(0.95); /* More dramatic entrance */
+    transform: translateX(30px) scale(0.95);
     will-change: filter, transform, opacity;
     cursor: crosshair;
     scroll-snap-align: center;
-    background: var(--offwhite); /* Placeholder color */
+    background: var(--offwhite);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
+
+.gallery-image:hover {
+    filter: grayscale(0) brightness(1);
+    opacity: 1 !important;
+    transform: scale(1.02) translateZ(0);
+    z-index: 2;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
 
 .services-item.active .gallery-image {
     opacity: 1;
