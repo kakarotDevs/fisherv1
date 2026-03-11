@@ -432,12 +432,12 @@ footer {
 /* Mobile Optimizations */
 @media (max-width: 768px) {
   main {
-    padding: 100px 24px 0; /* Restore side padding for all main content */
+    padding: 120px 32px 0; /* Increased top and side padding for mobile breathing room */
   }
   
   .logo {
     top: 20px;
-    left: 24px;
+    left: 32px; /* Sync with main horizontal padding */
   }
   
   .logo img {
@@ -445,10 +445,10 @@ footer {
   }
   
   .hero {
-    padding-top: 15vh;
-    padding-bottom: 8vh;
+    padding-top: 20vh; /* More vertical space from header */
+    padding-bottom: 12vh;
     width: 100%;
-    max-width: none; /* Ensure it truly breaks out of constraints */
+    max-width: none;
     padding-left: 0; 
     padding-right: 0;
   }
