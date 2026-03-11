@@ -87,7 +87,7 @@ body {
 
 main {
     flex: 1;
-    padding: 100px 40px 0;
+    padding: 160px 40px 0;
 }
 
 /* Subtle background texture */
@@ -225,7 +225,7 @@ body::after {
 
 /* Hero Section */
 .hero {
-    padding-top: 20vh;
+    padding-top: 25vh;
     padding-bottom: 12vh;
     max-width: 1000px;
 }
@@ -448,7 +448,7 @@ footer {
 /* Mobile Optimizations */
 @media (max-width: 768px) {
     main {
-        padding: 120px 32px 0; /* Increased top and side padding for mobile breathing room */
+        padding: 180px 32px 0; /* Increased top and side padding for mobile breathing room */
     }
 
     .logo {
@@ -461,7 +461,7 @@ footer {
     }
 
     .hero {
-        padding-top: 20vh; /* More vertical space from header */
+        padding-top: 25vh; /* More vertical space from header */
         padding-bottom: 12vh;
         width: 100%;
         max-width: none;
