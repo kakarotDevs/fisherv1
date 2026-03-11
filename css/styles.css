@@ -388,15 +388,15 @@ body::after {
     min-width: 450px;
     object-fit: cover;
     transition: 
-        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
         opacity 0.5s ease,
-        box-shadow 0.5s ease;
+        box-shadow 0.4s ease;
     border-radius: 12px;
     opacity: 0;
     will-change: transform, opacity;
     scroll-snap-align: center;
     background: var(--offwhite);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); /* Lifted shadow around edges */
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08); /* Minimal 3px-ish lift shadow around edges */
 }
 
 .services-item.active .gallery-image {
@@ -404,27 +404,10 @@ body::after {
 }
 
 .gallery-image:hover {
-    transform: scale(1.05); /* Grow on hover */
+    transform: scale(1.05); /* Only grow on hover */
     z-index: 10;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18); /* Enhanced lift shadow */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); /* Slightly deeper shadow on grow */
 }
-
-.services-item.active .services-header {
-    padding-left: 12px;
-}
-
-
-.services-item.active .gallery-image {
-    opacity: 1;
-}
-
-.gallery-image:hover {
-    transform: scale(1.05);
-    z-index: 10;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15); /* Slightly more shadow on hover/grow */
-}
-
-.services-item.active .services-header {
 
     padding-left: 12px;
 }
@@ -667,7 +650,7 @@ footer {
         opacity: 1 !important;
         transform: scale(1) !important;
         transition-delay: 0s !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
     .gallery-track {
