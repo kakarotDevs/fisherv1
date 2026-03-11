@@ -409,27 +409,88 @@ body::after {
     cursor: grabbing;
 }
 
-.gallery-image {
+.gallery-image-wrapper {
+    position: relative;
     height: 90%;
     min-width: 450px;
-    object-fit: cover;
-    transition: 
-        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.5s ease;
     border-radius: 12px;
+    scroll-snap-align: center;
     opacity: 0;
     will-change: transform, opacity;
-    scroll-snap-align: center;
-    background: var(--offwhite);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    cursor: pointer;
+    outline: none;
+    z-index: 1;
 }
 
-.services-item.active .gallery-image {
+.services-item.active .gallery-image-wrapper {
     opacity: 1;
 }
 
-.gallery-image:hover {
-    transform: scale(1.05);
+.gallery-image-wrapper:hover,
+.gallery-image-wrapper:focus {
+    transform: scale(1.04);
     z-index: 10;
+}
+
+.gallery-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    background: var(--offwhite);
+    display: block;
+    z-index: 2;
+}
+
+/* Drawing Border Animation */
+.border-anim {
+    position: absolute;
+    inset: -3px;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.border-anim::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250%;
+    height: 250%;
+    background: conic-gradient(
+        from 0deg, 
+        transparent 60%, 
+        var(--google-blue) 80%, 
+        var(--google-green) 100%
+    );
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.gallery-image-wrapper:hover .border-anim,
+.gallery-image-wrapper:focus .border-anim {
+    animation: drawSweep 1.2s forwards;
+}
+
+.gallery-image-wrapper:hover .border-anim::before,
+.gallery-image-wrapper:focus .border-anim::before {
+    animation: sweepRotate 1.2s linear forwards;
+}
+
+@keyframes drawSweep {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes sweepRotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .services-detail {
@@ -641,11 +702,17 @@ footer {
         height: 350px;
     }
 
-    .gallery-image {
+    .gallery-image-wrapper {
         min-width: 280px;
         opacity: 1 !important;
         transform: scale(1) !important;
         transition-delay: 0s !important;
+    }
+    .border-anim {
+        display: none !important;
+    }
+    .gallery-image {
+        min-width: unset;
     }
     
     .gallery-track {
