@@ -162,10 +162,12 @@
                         // Handle mouse wheel horizontal scroll
                         if (track) {
                             track.addEventListener('wheel', (e) => {
-                                if (e.deltaY !== 0) {
+                                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                                     e.preventDefault();
-                                    track.scrollLeft += e.deltaY;
+                                    track.scrollLeft += e.deltaX;
                                 }
+                                // If vertical scroll (deltaY), we do NOT preventDefault
+                                // so the page can scroll naturally.
                             }, { passive: false });
 
                             // Drag to scroll
