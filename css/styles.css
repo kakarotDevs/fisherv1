@@ -387,7 +387,6 @@ body::after {
     opacity: 0;
     transform: translateX(30px) scale(0.95);
     will-change: filter, transform, opacity;
-    cursor: crosshair;
     scroll-snap-align: center;
     background: var(--offwhite);
     -webkit-backface-visibility: hidden;
@@ -408,13 +407,6 @@ body::after {
     transform: translateX(0) scale(1);
 }
 
-.gallery-image:hover {
-    filter: grayscale(0) brightness(1);
-    opacity: 1 !important;
-    transform: scale(1.02);
-    z-index: 2;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
 .services-item.active .services-header {
     padding-left: 12px;
 }
