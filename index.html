@@ -263,14 +263,14 @@
                             if (prevBtn && nextBtn) {
                                 prevBtn.addEventListener('click', (e) => {
                                     e.stopPropagation();
-                                    const imageWidth = track.querySelector('.gallery-image-wrapper').offsetWidth;
+                                    const imageWidth = track.querySelector('.gallery-image').offsetWidth;
                                     const gap = parseInt(window.getComputedStyle(track).gap) || 40;
                                     smoothScrollTo(track, -(imageWidth + gap), 800);
                                 });
 
                                 nextBtn.addEventListener('click', (e) => {
                                     e.stopPropagation();
-                                    const imageWidth = track.querySelector('.gallery-image-wrapper').offsetWidth;
+                                    const imageWidth = track.querySelector('.gallery-image').offsetWidth;
                                     const gap = parseInt(window.getComputedStyle(track).gap) || 40;
                                     smoothScrollTo(track, (imageWidth + gap), 800);
                                 });
