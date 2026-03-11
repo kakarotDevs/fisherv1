@@ -142,7 +142,31 @@
                 // Re-observe when htmx adds content
                 document.body.addEventListener("htmx:afterSwap", (evt) => {
                     observeElements();
+                    shuffleGalleries();
                 });
+
+                function shuffleGalleries() {
+                    const tracks = document.querySelectorAll(".gallery-track");
+                    tracks.forEach((track) => {
+                        const images = Array.from(track.children);
+                        for (let i = images.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            track.appendChild(images[j]);
+                        }
+                    });
+
+                    // Add click listeners for accordion exclusivity
+                    document.querySelectorAll('.services-item').forEach(item => {
+                        item.onclick = function() {
+                            const isActive = this.classList.contains('active');
+                            document.querySelectorAll('.services-item').forEach(el => el.classList.remove('active'));
+                            if (!isActive) this.classList.add('active');
+                        };
+                    });
+                }
+
+                // Initial shuffle
+                shuffleGalleries();
             });
         </script>
     </body>
