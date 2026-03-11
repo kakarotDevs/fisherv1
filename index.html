@@ -172,9 +172,11 @@
                             let isDown = false;
                             let startX;
                             let scrollLeft;
+                            let isDragging = false;
 
                             track.addEventListener('mousedown', (e) => {
                                 isDown = true;
+                                isDragging = false;
                                 track.classList.add('grabbing');
                                 startX = e.pageX - track.offsetLeft;
                                 scrollLeft = track.scrollLeft;
@@ -183,17 +185,29 @@
                                 isDown = false;
                                 track.classList.remove('grabbing');
                             });
-                            track.addEventListener('mouseup', () => {
+                            track.addEventListener('mouseup', (e) => {
                                 isDown = false;
                                 track.classList.remove('grabbing');
                             });
                             track.addEventListener('mousemove', (e) => {
                                 if (!isDown) return;
-                                e.preventDefault();
+                                
                                 const x = e.pageX - track.offsetLeft;
                                 const walk = (x - startX) * 2;
-                                track.scrollLeft = scrollLeft - walk;
+                                if (Math.abs(walk) > 5) {
+                                    isDragging = true;
+                                    e.preventDefault();
+                                    track.scrollLeft = scrollLeft - walk;
+                                }
                             });
+                            
+                            // Block accordion toggle if dragging occurred
+                            item.addEventListener('click', (e) => {
+                                if (isDragging) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }
+                            }, true);
                         }
 
                         item.onclick = function() {
