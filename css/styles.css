@@ -415,26 +415,6 @@ footer {
 .htmx-request {
     opacity: 0.5;
 }
-/* Watermark */
-.watermark {
-    position: fixed;
-    bottom: -10%;
-    right: -5%;
-    width: 60vw;
-    max-width: 800px;
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: -1;
-    filter: grayscale(1);
-    transition: opacity 1s ease;
-}
-
-.watermark img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
 /* Animations */
 @keyframes fadeUp {
     from {
@@ -556,12 +536,5 @@ footer {
     .dev-credit {
         justify-content: center;
         order: 1;
-    }
-
-    .watermark {
-        width: 100vw;
-        bottom: -5%;
-        right: -10%;
-        opacity: 0.02;
     }
 }
