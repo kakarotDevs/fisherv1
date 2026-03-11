@@ -228,20 +228,45 @@
                             // Add Navigation Button Listeners
                             const prevBtn = item.querySelector('.prev-btn');
                             const nextBtn = item.querySelector('.next-btn');
+
+                            function smoothScrollTo(element, amount, duration) {
+                                const start = element.scrollLeft;
+                                const startTime = performance.now();
+                                const originalSnap = element.style.scrollSnapType;
+                                element.style.scrollSnapType = 'none';
+
+                                function easeInOutQuart(t) {
+                                    return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+                                }
+
+                                function animate(currentTime) {
+                                    const elapsed = currentTime - startTime;
+                                    const progress = Math.min(elapsed / duration, 1);
+                                    
+                                    element.scrollLeft = start + amount * easeInOutQuart(progress);
+                                    
+                                    if (progress < 1) {
+                                        requestAnimationFrame(animate);
+                                    } else {
+                                        element.style.scrollSnapType = originalSnap;
+                                    }
+                                }
+                                requestAnimationFrame(animate);
+                            }
                             
                             if (prevBtn && nextBtn) {
                                 prevBtn.addEventListener('click', (e) => {
                                     e.stopPropagation();
                                     const imageWidth = track.querySelector('.gallery-image').offsetWidth;
                                     const gap = parseInt(window.getComputedStyle(track).gap) || 40;
-                                    track.scrollBy({ left: -(imageWidth + gap), behavior: 'smooth' });
+                                    smoothScrollTo(track, -(imageWidth + gap), 600);
                                 });
 
                                 nextBtn.addEventListener('click', (e) => {
                                     e.stopPropagation();
                                     const imageWidth = track.querySelector('.gallery-image').offsetWidth;
                                     const gap = parseInt(window.getComputedStyle(track).gap) || 40;
-                                    track.scrollBy({ left: (imageWidth + gap), behavior: 'smooth' });
+                                    smoothScrollTo(track, (imageWidth + gap), 600);
                                 });
                             }
 
