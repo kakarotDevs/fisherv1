@@ -194,28 +194,6 @@
                             }
                         });
 
-                        // Focus effect on scroll
-                        const updateFocus = () => {
-                            const trackRect = track.getBoundingClientRect();
-                            const trackCenter = trackRect.left + trackRect.width / 2;
-                            
-                            track.querySelectorAll('.gallery-image').forEach(img => {
-                                const imgRect = img.getBoundingClientRect();
-                                const imgCenter = imgRect.left + imgRect.width / 2;
-                                const distance = Math.abs(trackCenter - imgCenter);
-                                const proximity = 1 - Math.min(1, distance / (trackRect.width / 1.5));
-                                
-                                if (proximity > 0.8) {
-                                    img.classList.add('is-focused');
-                                } else {
-                                    img.classList.remove('is-focused');
-                                }
-                            });
-                        };
-
-                        track.addEventListener('scroll', updateFocus);
-                        window.addEventListener('resize', updateFocus);
-                        
                         // Clean accordion toggle
                         item.onclick = function(e) {
                             if (isDragging) return;
@@ -231,7 +209,6 @@
                                 item.classList.add('active');
                                 setTimeout(() => {
                                     track.scrollLeft = 0;
-                                    updateFocus();
                                 }, 50);
                             }
                         };
