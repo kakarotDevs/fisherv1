@@ -160,7 +160,20 @@
                         item.onclick = function() {
                             const isActive = this.classList.contains('active');
                             document.querySelectorAll('.services-item').forEach(el => el.classList.remove('active'));
-                            if (!isActive) this.classList.add('active');
+                            if (!isActive) {
+                                this.classList.add('active');
+                                // Shuffle again on open for variety
+                                const track = this.querySelector('.gallery-track');
+                                if (track) {
+                                    const images = Array.from(track.children);
+                                    for (let i = images.length - 1; i > 0; i--) {
+                                        const j = Math.floor(Math.random() * (i + 1));
+                                        track.appendChild(images[j]);
+                                    }
+                                    // Slow auto-scroll start
+                                    track.scrollLeft = 0;
+                                }
+                            }
                         };
                     });
                 }
