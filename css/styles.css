@@ -523,37 +523,4 @@ footer {
     justify-content: center;
     order: 1;
   }
-
-  /* Mobile gradient scroll animation */
-  .mobile-reveal::after {
-    transform: scaleX(0);
-    opacity: 0;
-    transition: opacity 0.4s ease; /* Fade out when scrolling out */
-  }
-
-  .mobile-reveal.is-revealed::after {
-    animation: mobileUnderlineSweep 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    transform-origin: left;
-  }
-
-  @keyframes mobileUnderlineSweep {
-    0% { transform: scaleX(0); opacity: 0; }
-    50% { transform: scaleX(1); opacity: 1; }
-    100% { transform: scaleX(1); opacity: 0.25; }
-  }
-
-  .mobile-reveal.is-revealed .services-name {
-    animation: mobileTextSweep 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @keyframes mobileTextSweep {
-    0% { color: var(--black); }
-    40% {
-      background: linear-gradient(90deg, var(--google-blue), var(--google-green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    100% { color: var(--black); }
-  }
 }
