@@ -344,8 +344,8 @@ body::after {
     height: 0;
     opacity: 0;
     transition: 
-        height 0.8s cubic-bezier(0.19, 1, 0.22, 1),
-        opacity 0.6s ease;
+        height 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.4s ease;
     position: relative;
     background: var(--white);
     overflow: hidden;
@@ -387,33 +387,45 @@ body::after {
     height: 90%;
     min-width: 450px;
     object-fit: cover;
-    filter: grayscale(1) brightness(0.85);
     transition: 
-        filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.6s ease,
-        box-shadow 0.6s ease;
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.5s ease,
+        box-shadow 0.5s ease;
     border-radius: 12px;
     opacity: 0;
-    will-change: filter, transform, opacity, box-shadow;
+    will-change: transform, opacity;
     scroll-snap-align: center;
     background: var(--offwhite);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); /* Lifted shadow around edges */
 }
 
 .services-item.active .gallery-image {
-    opacity: 0.8;
+    opacity: 1;
 }
 
 .gallery-image:hover {
-    filter: grayscale(0) brightness(1);
-    opacity: 1 !important;
-    transform: scale(1.03) translateY(-5px);
+    transform: scale(1.05); /* Grow on hover */
     z-index: 10;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18); /* Enhanced lift shadow */
 }
 
 .services-item.active .services-header {
+    padding-left: 12px;
+}
+
+
+.services-item.active .gallery-image {
+    opacity: 1;
+}
+
+.gallery-image:hover {
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15); /* Slightly more shadow on hover/grow */
+}
+
+.services-item.active .services-header {
+
     padding-left: 12px;
 }
 
@@ -652,10 +664,10 @@ footer {
 
     .gallery-image {
         min-width: 280px;
-        filter: grayscale(0) brightness(1); /* Color by default on mobile for better visibility */
         opacity: 1 !important;
-        transform: translateX(0) !important;
+        transform: scale(1) !important;
         transition-delay: 0s !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
     
     .gallery-track {
