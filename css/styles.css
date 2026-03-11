@@ -305,6 +305,7 @@ body::after {
 }
 
 .services-name {
+
     font-size: clamp(1.5rem, 3vw, 2.25rem);
     font-weight: 500;
     letter-spacing: -0.02em;
