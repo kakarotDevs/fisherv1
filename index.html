@@ -111,8 +111,15 @@
                     (entries) => {
                         entries.forEach((entry) => {
                             if (entry.isIntersecting) {
-                                entry.target.style.animationPlayState =
-                                    "running";
+                                entry.target.style.animationPlayState = "running";
+                                if (entry.target.classList.contains('mobile-reveal')) {
+                                    entry.target.classList.add('is-revealed');
+                                }
+                            } else {
+                                // Reset animation when out of view
+                                if (entry.target.classList.contains('mobile-reveal')) {
+                                    entry.target.classList.remove('is-revealed');
+                                }
                             }
                         });
                     },
@@ -120,9 +127,9 @@
                 );
 
                 const observeElements = () => {
-                    document.querySelectorAll(".animate").forEach((el) => {
-                        if (el.style.animationPlayState !== "running") {
-                            el.style.animationPlayState = "paused";
+                    document.querySelectorAll(".animate, .mobile-reveal").forEach((el) => {
+                        if (el.style.animationPlayState !== "running" || (el.classList.contains('mobile-reveal') && !el.classList.contains('is-revealed'))) {
+                            if (el.classList.contains('animate')) el.style.animationPlayState = "paused";
                             observer.observe(el);
                         }
                     });
