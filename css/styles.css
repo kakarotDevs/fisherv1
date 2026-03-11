@@ -437,7 +437,7 @@ footer {
 /* Mobile Optimizations */
 @media (max-width: 768px) {
   main {
-    padding: 100px 24px 0;
+    padding: 100px 0 0; /* Remove side padding from main container */
   }
   
   .logo {
@@ -452,6 +452,19 @@ footer {
   .hero {
     padding-top: 15vh;
     padding-bottom: 8vh;
+    width: 100%;
+    max-width: none; /* Ensure it truly breaks out of constraints */
+    padding-left: 12px; /* Very minimal side padding for hero */
+    padding-right: 12px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.5rem, 15vw, 8.5rem); /* Larger typography for mobile impact */
+  }
+
+  .tagline {
+    padding-left: 12px;
+    padding-right: 12px;
   }
   
   .header-link {
@@ -466,6 +479,12 @@ footer {
     height: 80px;
   }
   
+  .services, .contact {
+    padding-left: 24px; /* Restore comfortable padding for content sections */
+    padding-right: 24px;
+    margin-top: 80px;
+  }
+
   .services-item {
     flex-direction: column;
     gap: 4px;
@@ -478,10 +497,6 @@ footer {
 
   .contact-grid {
     gap: 24px;
-  }
-
-  .services, .contact {
-    margin-top: 80px;
   }
   
   footer {
