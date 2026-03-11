@@ -396,8 +396,19 @@ body::after {
     will-change: transform, opacity;
     scroll-snap-align: center;
     background: var(--offwhite);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08); /* Minimal 3px-ish lift shadow around edges */
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15); /* Tight 3px-ish lift shadow */
 }
+
+.services-item.active .gallery-image {
+    opacity: 1;
+}
+
+.gallery-image:hover {
+    transform: scale(1.05); /* Just grow */
+    z-index: 10;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); /* Enhanced lift shadow */
+}
+
 
 .services-item.active .gallery-image {
     opacity: 1;
