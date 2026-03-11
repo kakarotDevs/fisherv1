@@ -312,32 +312,58 @@ body::after {
     background: transparent;
 }
 
-.services-item.active .services-header {
-    padding-left: 12px;
+.services-name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-
-.services-header::after {
+.services-name-wrapper::after {
     content: "+";
     font-family: "Inter", sans-serif;
     font-size: 1.5rem;
     font-weight: 300;
     color: var(--silver);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    display: inline-block;
+    width: 20px;
 }
 
-.services-item.active .services-header::after {
+.services-item.active .services-name-wrapper::after {
     content: "−";
     color: var(--google-blue);
-    transform: translateY(-50%) rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.services-item.active .services-header {
+    padding-left: 12px;
 }
 
 .services-item:hover .services-header {
     padding-left: 12px;
+}
+
+.services-name {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.services-item.active .services-name {
+    background: linear-gradient(90deg, var(--google-blue), var(--google-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.services-item:hover .services-name {
+    background: linear-gradient(90deg, var(--google-blue), var(--google-green));
+    background-size: 500% 100%;
+    background-position: left;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .services-gallery {
@@ -363,7 +389,7 @@ body::after {
     gap: 40px;
     height: 100%;
     width: 100%;
-    padding: 0 15vw; /* More padding to encourage center focus */
+    padding: 0 15vw;
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
@@ -371,7 +397,7 @@ body::after {
     -webkit-overflow-scrolling: touch;
     align-items: center;
     cursor: grab;
-    scroll-snap-type: x proximity; /* Proximity feels less aggressive than mandatory */
+    scroll-snap-type: x proximity;
     scroll-behavior: smooth;
 }
 
@@ -389,14 +415,12 @@ body::after {
     object-fit: cover;
     transition: 
         transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.5s ease,
-        box-shadow 0.4s ease;
+        opacity 0.5s ease;
     border-radius: 12px;
     opacity: 0;
     will-change: transform, opacity;
     scroll-snap-align: center;
     background: var(--offwhite);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15); /* Tight 3px-ish lift shadow */
 }
 
 .services-item.active .gallery-image {
@@ -404,47 +428,8 @@ body::after {
 }
 
 .gallery-image:hover {
-    transform: scale(1.05); /* Just grow */
+    transform: scale(1.05);
     z-index: 10;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); /* Enhanced lift shadow */
-}
-
-
-.services-item.active .gallery-image {
-    opacity: 1;
-}
-
-.gallery-image:hover {
-    transform: scale(1.05); /* Only grow on hover */
-    z-index: 10;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); /* Slightly deeper shadow on grow */
-}
-
-    padding-left: 12px;
-}
-
-.services-item.active .services-name {
-    background: linear-gradient(90deg, var(--google-blue), var(--google-green));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.services-name {
-
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.services-item:hover .services-name {
-    background: linear-gradient(90deg, var(--google-blue), var(--google-green));
-    background-size: 500% 100%;
-    background-position: left;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .services-detail {
@@ -661,7 +646,6 @@ footer {
         opacity: 1 !important;
         transform: scale(1) !important;
         transition-delay: 0s !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
     .gallery-track {
