@@ -223,6 +223,75 @@ body::after {
     transform-origin: left;
 }
 
+/* Rolling-letter reveal ([data-roll] links, built in index.html) */
+/* The letters carry the gradient themselves; the link's clipped-text
+   gradient would paint a ghost of the moved letters, so turn it off. */
+[data-roll]:hover,
+[data-roll].is-revealed {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+}
+
+.roll {
+    display: inline-grid;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.roll-row {
+    grid-area: 1 / 1;
+    white-space: pre;
+}
+
+.roll-char {
+    display: inline-block;
+    white-space: pre;
+    -webkit-text-fill-color: currentColor;
+    transition:
+        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.4s ease;
+    transition-delay: calc(var(--i) * 22ms);
+}
+
+.roll-to .roll-char {
+    transform: translateY(110%);
+}
+
+.is-revealed .roll-from .roll-char {
+    transform: translateY(-110%);
+}
+
+.is-revealed .roll-to .roll-char {
+    transform: none;
+    color: color-mix(
+        in srgb,
+        var(--google-blue),
+        var(--google-green) calc(var(--i) / var(--n) * 100%)
+    );
+}
+
+@media (hover: hover) and (pointer: fine) {
+    [data-roll]:hover .roll-from .roll-char {
+        transform: translateY(-110%);
+    }
+
+    [data-roll]:hover .roll-to .roll-char {
+        transform: none;
+        color: color-mix(
+            in srgb,
+            var(--google-blue),
+            var(--google-green) calc(var(--i) / var(--n) * 100%)
+        );
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .roll-char {
+        transition-duration: 0.01ms;
+        transition-delay: 0s;
+    }
+}
+
 /* Hero Section */
 .hero {
     padding-top: 25vh;

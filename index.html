@@ -94,18 +94,7 @@
         <a
             href="tel:0456676808"
             class="header-link animate"
-            hx-get="partials/phone-reveal.html"
-            hx-trigger="mouseenter[window.innerWidth > 768]"
-            hx-target="this"
-            hx-swap="innerHTML"
-            hx-on:mouseleave="if(!this.hasAttribute('data-locked')) this.innerText='Contact Us'"
-            onclick="
-                if (window.innerWidth > 768) {
-                    if (this.hasAttribute('data-locked')) return true;
-                    this.setAttribute('data-locked', 'true');
-                    return false;
-                }
-            "
+            data-roll="0456 676 808"
             >Contact Us</a
         >
 
@@ -151,7 +140,49 @@
         </footer>
 
         <script>
+            // Rolling-letter reveal: [data-roll] links roll their text into the
+            // data-roll value on hover. Desktop: first click locks, second click
+            // follows the link. Touch: tap follows the link straight away.
+            const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+            function buildRow(text, cls) {
+                const row = document.createElement("span");
+                row.className = "roll-row " + cls;
+                const chars = [...text];
+                chars.forEach((c, i) => {
+                    const span = document.createElement("span");
+                    span.className = "roll-char";
+                    span.textContent = c;
+                    span.style.setProperty("--i", i);
+                    span.style.setProperty("--n", Math.max(chars.length - 1, 1));
+                    row.appendChild(span);
+                });
+                return row;
+            }
+
+            function initRolls() {
+                document.querySelectorAll("[data-roll]:not([data-roll-ready])").forEach((el) => {
+                    const from = el.textContent.trim();
+                    const to = el.dataset.roll;
+                    el.dataset.rollReady = "";
+                    el.setAttribute("aria-label", `${from}: ${to}`);
+
+                    const roll = document.createElement("span");
+                    roll.className = "roll";
+                    roll.setAttribute("aria-hidden", "true");
+                    roll.append(buildRow(from, "roll-from"), buildRow(to, "roll-to"));
+                    el.replaceChildren(roll);
+
+                    el.addEventListener("click", (e) => {
+                        if (!canHover.matches || el.classList.contains("is-revealed")) return;
+                        e.preventDefault();
+                        el.classList.add("is-revealed");
+                    });
+                });
+            }
+
             document.addEventListener("DOMContentLoaded", () => {
+                initRolls();
                 const observer = new IntersectionObserver(
                     (entries) => {
                         entries.forEach((entry) => {
@@ -179,6 +210,7 @@
                 document.body.addEventListener("htmx:afterSwap", (evt) => {
                     observeElements();
                     shuffleGalleries();
+                    initRolls();
                 });
 
                 function shuffleGalleries() {
