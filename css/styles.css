@@ -1032,7 +1032,8 @@ main {
 }
 
 /* ---------- 5. Photos: dark skeleton tiles, then the lights click on at random ---------- */
-/* --d is each tile's random switch-on delay, set by js/electric.js when it lights up. */
+/* .is-lit and --d (random delay) are set per tile by js/electric.js. On phones each
+   tile lights as it's swiped into view instead. */
 .fx .gallery-image-wrapper::after {
     content: "";
     position: absolute;
@@ -1052,20 +1053,20 @@ main {
     animation: skeletonShimmer 1.4s ease-in-out infinite;
 }
 
-.fx .gallery-track.lights-on .gallery-image-wrapper::after {
+.fx .gallery-image-wrapper.is-lit::after {
     opacity: 0;
     animation: none;
     transition: opacity 0.12s ease-out;
     transition-delay: var(--d, 0ms);
 }
 
-.fx .gallery-track.lights-on .gallery-image {
+.fx .gallery-image-wrapper.is-lit .gallery-image {
     animation: bulbStrike 0.6s ease-out both;
     animation-delay: var(--d, 0ms);
 }
 
 /* Warm light spilling out around each photo as it comes on */
-.fx .gallery-track.lights-on .gallery-image-wrapper {
+.fx .gallery-image-wrapper.is-lit {
     animation: lightSpill 1s ease-out both;
     animation-delay: var(--d, 0ms);
 }
@@ -1091,12 +1092,12 @@ main {
         animation: none;
     }
 
-    .fx .gallery-track.lights-on .gallery-image-wrapper::after {
+    .fx .gallery-image-wrapper.is-lit::after {
         transition-delay: 0s;
     }
 
-    .fx .gallery-track.lights-on .gallery-image,
-    .fx .gallery-track.lights-on .gallery-image-wrapper {
+    .fx .gallery-image-wrapper.is-lit .gallery-image,
+    .fx .gallery-image-wrapper.is-lit {
         animation: none;
     }
 }
