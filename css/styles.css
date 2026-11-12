@@ -145,7 +145,7 @@ body::after {
     z-index: 50;
 }
 
-.logo img {
+.logo .logo-svg {
     height: 58px;
     width: auto;
     display: block;
@@ -178,16 +178,6 @@ body::after {
     text-align: left;
 }
 
-.header-link:hover {
-    background: linear-gradient(90deg, var(--google-blue), var(--google-green));
-    background-size: 200% 100%;
-    background-position: left;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    transform: translateY(-2px);
-}
-
 .header-link::after,
 .page-link::after,
 .services-item::after {
@@ -197,7 +187,7 @@ body::after {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, var(--google-blue), var(--google-green));
+    background: var(--google-blue);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -209,10 +199,6 @@ body::after {
 
 .header-link:hover,
 .page-link:hover {
-    background: linear-gradient(90deg, var(--google-blue), var(--google-green));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
     transform: translateY(-2px);
 }
 
@@ -224,14 +210,6 @@ body::after {
 }
 
 /* Rolling-letter reveal ([data-roll] links, built in index.html) */
-/* The letters carry the gradient themselves; the link's clipped-text
-   gradient would paint a ghost of the moved letters, so turn it off. */
-[data-roll]:hover,
-[data-roll].is-revealed {
-    background: none;
-    -webkit-text-fill-color: currentColor;
-}
-
 .roll {
     display: inline-grid;
     overflow: hidden;
@@ -263,11 +241,6 @@ body::after {
 
 .is-revealed .roll-to .roll-char {
     transform: none;
-    color: color-mix(
-        in srgb,
-        var(--google-blue),
-        var(--google-green) calc(var(--i) / var(--n) * 100%)
-    );
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -277,11 +250,6 @@ body::after {
 
     [data-roll]:hover .roll-to .roll-char {
         transform: none;
-        color: color-mix(
-            in srgb,
-            var(--google-blue),
-            var(--google-green) calc(var(--i) / var(--n) * 100%)
-        );
     }
 }
 
@@ -387,23 +355,6 @@ body::after {
     gap: 12px;
 }
 
-.services-name-wrapper::after {
-    content: "+";
-    font-family: "Inter", sans-serif;
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: var(--silver);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    display: inline-block;
-    width: 20px;
-}
-
-.services-item.active .services-name-wrapper::after {
-    content: "−";
-    color: var(--google-blue);
-    transform: rotate(180deg);
-}
-
 .services-item.active .services-header {
     padding-left: 12px;
 }
@@ -419,21 +370,11 @@ body::after {
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.services-item.active .services-name {
-    background: linear-gradient(90deg, var(--google-blue), var(--google-green));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.services-item.active .services-name,
+.services-item:hover .services-name {
+    color: var(--google-blue);
 }
 
-.services-item:hover .services-name {
-    background: linear-gradient(90deg, var(--google-blue), var(--google-green));
-    background-size: 500% 100%;
-    background-position: left;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
 
 .services-gallery {
     height: 0;
@@ -533,9 +474,8 @@ body::after {
     height: 250%;
     background: conic-gradient(
         from 0deg, 
-        transparent 50%, 
-        var(--google-green) 85%, 
-        var(--google-blue) 100%
+        transparent 0 72%,
+        var(--google-blue) 72% 100%
     );
     transform: translate(-50%, -50%) rotate(0deg);
 }
@@ -701,7 +641,7 @@ footer {
         left: 24px;
     }
 
-    .logo img {
+    .logo .logo-svg {
         height: 48px;
     }
 
@@ -871,5 +811,338 @@ footer {
 @media (max-width: 768px) {
     .gallery-nav {
         display: none !important;
+    }
+}
+
+/* =============================================
+   ELECTRIC EFFECTS (behaviour in js/electric.js)
+   ============================================= */
+
+:root {
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --gutter: 40px;
+    --circuit-x: 16px;
+}
+
+/* ---------- 1. Power-on intro ---------- */
+.logo-svg {
+    overflow: visible;
+}
+
+.intro .logo-bolt {
+    animation: boltFlicker 1.1s steps(1, end) 0.35s both;
+}
+
+.intro .logo-ring {
+    animation: ringCharge 0.9s var(--ease-out) 1.1s both;
+}
+
+@keyframes boltFlicker {
+    0% { opacity: 0.12; }
+    8% { opacity: 1; }
+    13% { opacity: 0.15; }
+    22% { opacity: 0.9; }
+    26% { opacity: 0.2; }
+    40% { opacity: 1; filter: drop-shadow(0 0 0 rgba(66, 133, 244, 0)); }
+    55% { filter: drop-shadow(0 0 6px rgba(66, 133, 244, 0.8)); }
+    100% { opacity: 1; filter: drop-shadow(0 0 0 rgba(66, 133, 244, 0)); }
+}
+
+@keyframes ringCharge {
+    0% { opacity: 0.25; }
+    100% { opacity: 1; }
+}
+
+/* A solid blue edge sweeps through FISHER as it turns from grey to black */
+.intro .hero h1 span:nth-child(1) {
+    background: linear-gradient(
+        90deg,
+        var(--black) 0 46%,
+        var(--google-blue) 46% 51%,
+        #e2e2e2 51% 100%
+    );
+    background-size: 260% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: currentSweep 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.9s forwards;
+}
+
+@keyframes currentSweep {
+    to { background-position: 0% 0; }
+}
+
+/* ---------- 2. Current running down the page ---------- */
+main {
+    position: relative;
+}
+
+.circuit {
+    position: absolute;
+    left: var(--circuit-x);
+    width: 1px;
+    background: var(--offwhite);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.circuit-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: var(--google-blue);
+    transform-origin: top;
+    transform: scaleY(0);
+    will-change: transform;
+}
+
+.circuit-spark {
+    position: absolute;
+    left: -7px;
+    top: 0;
+    width: 15px;
+    height: 16px;
+    will-change: transform;
+    animation: sparkPulse 1.6s ease-in-out infinite;
+}
+
+.circuit-spark svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: var(--google-blue);
+    filter: drop-shadow(0 0 4px rgba(66, 133, 244, 0.6));
+}
+
+/* The bolt and the node it reaches flash a shock yellow */
+.circuit-spark.is-shocked svg {
+    animation: boltShock 0.45s ease-out;
+}
+
+.is-shocked h2::before {
+    animation: nodeShock 0.45s ease-out;
+}
+
+@keyframes boltShock {
+    0% { fill: #f2b705; filter: drop-shadow(0 0 6px rgba(242, 183, 5, 0.9)); transform: scale(1.35) translateX(0); }
+    15% { transform: scale(1.35) translateX(-1.5px); }
+    30% { transform: scale(1.3) translateX(1.5px); }
+    45% { fill: #f2b705; transform: scale(1.2) translateX(-1px); }
+    100% { fill: var(--google-blue); filter: drop-shadow(0 0 4px rgba(66, 133, 244, 0.6)); transform: none; }
+}
+
+@keyframes nodeShock {
+    0%, 40% {
+        background: #f2b705;
+        border-color: #f2b705;
+        box-shadow: 0 0 10px 3px rgba(242, 183, 5, 0.7);
+    }
+}
+
+@keyframes sparkPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+}
+
+/* A node on the wire at each section label; it lights when the current arrives */
+.services h2,
+.contact h2 {
+    position: relative;
+    transition: color 0.6s ease;
+}
+
+.services h2::before,
+.contact h2::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(var(--circuit-x) - var(--gutter) - 3px);
+    width: 7px;
+    height: 7px;
+    margin-top: -3.5px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 1px solid var(--silver);
+    transition: all 0.5s var(--ease-out);
+}
+
+.is-powered h2 {
+    color: var(--google-blue);
+}
+
+.is-powered h2::before {
+    background: var(--google-blue);
+    border-color: var(--google-blue);
+    box-shadow: 0 0 8px 1px rgba(66, 133, 244, 0.5);
+}
+
+.contact.is-powered [data-roll] {
+    animation: phoneGlow 1.4s ease-out 0.2s;
+}
+
+@keyframes phoneGlow {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(66, 133, 244, 0)); }
+    35% { filter: drop-shadow(0 0 6px rgba(66, 133, 244, 0.6)); }
+}
+
+/* ---------- 3. Service icons: + turns into the service's icon when opened ---------- */
+.service-icon {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    overflow: visible;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.service-icon g {
+    transform-box: view-box;
+    transform-origin: 12px 12px;
+    transition:
+        transform 0.5s var(--ease-out),
+        opacity 0.35s ease;
+}
+
+.icon-plus {
+    stroke: var(--silver);
+}
+
+.services-item:hover .icon-plus {
+    stroke: var(--google-blue);
+}
+
+.icon-on {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.4);
+}
+
+.services-item.active .icon-plus {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.4);
+}
+
+.services-item.active .icon-on {
+    opacity: 1;
+    transform: none;
+}
+
+/* ---------- 5. Photos: dark skeleton tiles, then the lights click on at random ---------- */
+/* --d is each tile's random switch-on delay, set by js/electric.js when it lights up. */
+.fx .gallery-image-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background:
+        linear-gradient(
+            100deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.06) 50%,
+            transparent 70%
+        )
+        0 0 / 250% 100% no-repeat,
+        #151515;
+    z-index: 3;
+    pointer-events: none;
+    animation: skeletonShimmer 1.4s ease-in-out infinite;
+}
+
+.fx .gallery-track.lights-on .gallery-image-wrapper::after {
+    opacity: 0;
+    animation: none;
+    transition: opacity 0.12s ease-out;
+    transition-delay: var(--d, 0ms);
+}
+
+.fx .gallery-track.lights-on .gallery-image {
+    animation: bulbStrike 0.6s ease-out both;
+    animation-delay: var(--d, 0ms);
+}
+
+/* Warm light spilling out around each photo as it comes on */
+.fx .gallery-track.lights-on .gallery-image-wrapper {
+    animation: lightSpill 1s ease-out both;
+    animation-delay: var(--d, 0ms);
+}
+
+@keyframes skeletonShimmer {
+    from { background-position: 150% 0, 0 0; }
+    to { background-position: -50% 0, 0 0; }
+}
+
+@keyframes lightSpill {
+    0% { box-shadow: 0 0 0 0 rgba(255, 224, 160, 0); }
+    15% { box-shadow: 0 0 30px 6px rgba(255, 224, 160, 0.75); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 224, 160, 0); }
+}
+
+@keyframes bulbStrike {
+    0% { filter: brightness(1.7) contrast(0.85); }
+    100% { filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fx .gallery-image-wrapper::after {
+        animation: none;
+    }
+
+    .fx .gallery-track.lights-on .gallery-image-wrapper::after {
+        transition-delay: 0s;
+    }
+
+    .fx .gallery-track.lights-on .gallery-image,
+    .fx .gallery-track.lights-on .gallery-image-wrapper {
+        animation: none;
+    }
+}
+
+/* ---------- 6. Sparks off the pointer over clickable things ---------- */
+.spark {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 7px;
+    border-radius: 1px;
+    background: var(--google-blue);
+    pointer-events: none;
+    z-index: 101;
+    animation: sparkFly 0.45s ease-out forwards;
+}
+
+@keyframes sparkFly {
+    from {
+        opacity: 1;
+        transform: translate(var(--x), var(--y)) rotate(var(--a)) translateY(-4px);
+    }
+    to {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) rotate(var(--a)) translateY(calc(-1 * var(--d)));
+    }
+}
+
+/* ---------- Mobile + reduced motion ---------- */
+@media (max-width: 768px) {
+    :root {
+        --gutter: 24px;
+        --circuit-x: 9px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .circuit-spark,
+    .circuit-spark.is-shocked svg,
+    .is-shocked h2::before,
+    .contact.is-powered [data-roll] {
+        animation: none;
+    }
+
+    .service-icon g {
+        transition: none;
     }
 }
