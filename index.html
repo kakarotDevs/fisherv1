@@ -96,8 +96,8 @@
             })();
         </script>
         <script src="js/htmx.min.js" defer></script>
-        <script src="js/electric.js?v=2026-11-13o" defer></script>
-        <link rel="stylesheet" href="css/styles.css?v=2026-11-13o" />
+        <script src="js/electric.js?v=2026-11-13q" defer></script>
+        <link rel="stylesheet" href="css/styles.css?v=2026-11-13q" />
     </head>
     <body>
         <span class="logo animate">
@@ -129,14 +129,14 @@
 
             <!-- HTMX Lazy Loaded Sections -->
             <div
-                hx-get="partials/services.html?v=2026-11-13o"
+                hx-get="partials/services.html?v=2026-11-13q"
                 hx-trigger="intersect once"
                 hx-swap="outerHTML"
                 class="htmx-placeholder"
             ></div>
 
             <div
-                hx-get="partials/contact.html?v=2026-11-13o"
+                hx-get="partials/contact.html?v=2026-11-13q"
                 hx-trigger="intersect once"
                 hx-swap="outerHTML"
                 class="htmx-placeholder"
@@ -157,25 +157,8 @@
 
         <script>
             // Rolling-letter reveal: [data-roll] links roll their text into the
-            // data-roll value on hover. Desktop: first click locks, second click
-            // follows the link. Touch (no hover): each link rolls by itself once
-            // it's on screen and stays rolled; a tap follows the link straight away.
-            const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
-
-            const rollOnView = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (!entry.isIntersecting) return;
-                        const el = entry.target;
-                        rollOnView.unobserve(el);
-                        // The header link waits for the page to settle; others roll
-                        // shortly after they come into view.
-                        const delay = el.classList.contains("header-link") ? 1200 : 300;
-                        setTimeout(() => el.classList.add("is-revealed"), delay);
-                    });
-                },
-                { threshold: 1 },
-            );
+            // data-roll value. Desktop: hover rolls it. Every device: the first
+            // click or tap rolls it and locks it; the second follows the link.
 
             function buildRow(text, cls) {
                 const row = document.createElement("span");
@@ -206,12 +189,10 @@
                     el.replaceChildren(roll);
 
                     el.addEventListener("click", (e) => {
-                        if (!canHover.matches || el.classList.contains("is-revealed")) return;
+                        if (el.classList.contains("is-revealed")) return;
                         e.preventDefault();
                         el.classList.add("is-revealed");
                     });
-
-                    if (!canHover.matches) rollOnView.observe(el);
                 });
             }
 
