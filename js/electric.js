@@ -127,19 +127,17 @@
         );
     }
 
-    // 5. A gallery opens as dark skeleton tiles, then the lights click on.
-    // Desktop: every photo switches on at a random moment once loaded.
-    // Phones (only ~1 photo on screen): each photo switches on as it's swiped
-    // into view. Closing the service turns them all off again.
+    // 5. Desktop only: a gallery opens as dark skeleton tiles, then each photo
+    // switches on at a random moment once loaded. Closing the service turns them
+    // off again. Phones just show the photos (the effect felt janky there).
     function initGalleryLights() {
+        if (matchMedia("(max-width: 768px)").matches) return;
         document.documentElement.classList.add("fx");
-        const phone = matchMedia("(max-width: 768px)");
         const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         const ready = (img) =>
             img.complete && img.naturalWidth
                 ? Promise.resolve()
                 : img.decode().catch(() => {});
-        const observers = new Map();
 
         function lightAll(item, tiles) {
             // A random moment per tile, like rooms being lit; one goes straight away.
@@ -158,40 +156,13 @@
             });
         }
 
-        function lightOnSwipe(item, track, tiles) {
-            const opened = performance.now();
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        const tile = entry.target;
-                        if (!entry.isIntersecting || tile.dataset.lighting) return;
-                        tile.dataset.lighting = "1";
-                        observer.unobserve(tile);
-                        tile.style.setProperty("--d", "0ms");
-                        // The first photo still waits for the gallery to finish opening.
-                        const beat = Math.max(0, 420 - (performance.now() - opened));
-                        const img = tile.querySelector("img");
-                        Promise.race([Promise.all([ready(img), wait(beat)]), wait(2500)]).then(() => {
-                            if (item.classList.contains("active")) tile.classList.add("is-lit");
-                        });
-                    });
-                },
-                { root: track, threshold: 0.6 },
-            );
-            tiles.forEach((tile) => observer.observe(tile));
-            observers.set(track, observer);
-        }
-
         function lightUp(item, track) {
             const tiles = [...track.querySelectorAll(".gallery-image-wrapper")];
             tiles.forEach((t) => (t.querySelector("img").loading = "eager"));
-            if (phone.matches) lightOnSwipe(item, track, tiles);
-            else lightAll(item, tiles);
+            lightAll(item, tiles);
         }
 
         function turnOff(track) {
-            observers.get(track)?.disconnect();
-            observers.delete(track);
             track.querySelectorAll(".gallery-image-wrapper").forEach((tile) => {
                 tile.classList.remove("is-lit");
                 delete tile.dataset.lighting;

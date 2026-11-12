@@ -1032,8 +1032,7 @@ main {
 }
 
 /* ---------- 5. Photos: dark skeleton tiles, then the lights click on at random ---------- */
-/* .is-lit and --d (random delay) are set per tile by js/electric.js. On phones each
-   tile lights as it's swiped into view instead. */
+/* .fx (desktop only), .is-lit and --d (random delay) are set by js/electric.js. */
 .fx .gallery-image-wrapper::after {
     content: "";
     position: absolute;
@@ -1065,21 +1064,9 @@ main {
     animation-delay: var(--d, 0ms);
 }
 
-/* Warm light spilling out around each photo as it comes on */
-.fx .gallery-image-wrapper.is-lit {
-    animation: lightSpill 1s ease-out both;
-    animation-delay: var(--d, 0ms);
-}
-
 @keyframes skeletonShimmer {
     from { background-position: 150% 0, 0 0; }
     to { background-position: -50% 0, 0 0; }
-}
-
-@keyframes lightSpill {
-    0% { box-shadow: 0 0 0 0 rgba(255, 224, 160, 0); }
-    15% { box-shadow: 0 0 30px 6px rgba(255, 224, 160, 0.75); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 224, 160, 0); }
 }
 
 @keyframes bulbStrike {
@@ -1096,8 +1083,7 @@ main {
         transition-delay: 0s;
     }
 
-    .fx .gallery-image-wrapper.is-lit .gallery-image,
-    .fx .gallery-image-wrapper.is-lit {
+    .fx .gallery-image-wrapper.is-lit .gallery-image {
         animation: none;
     }
 }
